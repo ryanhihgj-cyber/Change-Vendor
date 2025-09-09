@@ -71,4 +71,14 @@ app.post("/slack/interactions", async (req, res) => {
       res.status(200).send();
     } catch (error) {
       console.error("❌ Error submitting modal:", error.message);
-      res.status
+      res.status(500).send("Failed to submit modal");
+    }
+  } else {
+    res.status(200).send();
+  }
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});

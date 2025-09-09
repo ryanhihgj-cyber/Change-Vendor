@@ -22,7 +22,8 @@ app.post("/slack/interactions", async (req, res) => {
         trigger_id: payload.trigger_id,
         view: {
           type: "modal",
-         _metadata: JSON.stringify({ row }),
+          callback_id: "vendor_selection_modal",
+          private_metadata: JSON.stringify({ row }),
           title: { type: "plain_text", text: "Change Vendor" },
           submit: { type: "plain_text", text: "Submit" },
           blocks: [
@@ -47,7 +48,7 @@ app.post("/slack/interactions", async (req, res) => {
 
       res.status(200).send();
     } catch (error) {
-      console.error("Error opening modal:", error.message);
+      console.error("❌ Error opening modal:", error.message);
       res.status(500).send("Failed to open modal");
     }
   }
@@ -69,15 +70,5 @@ app.post("/slack/interactions", async (req, res) => {
 
       res.status(200).send();
     } catch (error) {
-      console.error("Error submitting modal:", error.message);
-      res.status(500).send("Failed to submit modal");
-    }
-  } else {
-    res.status(200).send();
-  }
-});
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+      console.error("❌ Error submitting modal:", error.message);
+      res.status
